@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using TagCloud.Core.Words.Contract;
 
-namespace TagCloud.Core.Words
+namespace TagCloud.Core.Words.Loaders
 {
     public class TextLoader : IWordsLoader
     {

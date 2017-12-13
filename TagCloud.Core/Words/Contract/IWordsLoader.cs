@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TagCloud.Core.Words
+namespace TagCloud.Core.Words.Contract
 {
     public interface IWordsLoader
     {

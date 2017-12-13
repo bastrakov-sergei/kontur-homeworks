@@ -53,11 +53,21 @@
     <Compile Include="Math\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\CircleShapeFactory.cs" />
-    <Compile Include="Words\BoringFilter.cs" />
-    <Compile Include="Words\IWordFilter.cs" />
-    <Compile Include="Words\IWordProcessor.cs" />
-    <Compile Include="Words\IWordsLoader.cs" />
-    <Compile Include="Words\TextLoader.cs" />
+    <Compile Include="Words\Processing\IInitialFormOfWordProcessorFactory.cs" />
+    <Compile Include="Words\PartOfSpeech.cs" />
+    <Compile Include="Words\C.cs" />
+    <Compile Include="Words\Contract\IGrammar.cs" />
+    <Compile Include="Words\Filtering\IPartOfSpeechFactory.cs" />
+    <Compile Include="Words\Contract\IWordFilter.cs" />
+    <Compile Include="Words\Contract\IWordProcessor.cs" />
+    <Compile Include="Words\Contract\IWordsListFactory.cs" />
+    <Compile Include="Words\Contract\IWordsLoader.cs" />
+    <Compile Include="Words\Filtering\PartOfSpeechFilter.cs" />
+    <Compile Include="Words\Loaders\TextLoader.cs" />
+    <Compile Include="Words\Filtering\WordFilter.cs" />
+    <Compile Include="Words\Processing\InitialFormOfWordProcessor.cs" />
+    <Compile Include="Words\Processing\ToLowerProcessor.cs" />
+    <Compile Include="Words\WordsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">
@@ -70,5 +80,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

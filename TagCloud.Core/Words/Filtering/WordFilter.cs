@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TagCloud.Core.Words.Contract;
 
-namespace TagCloud.Core.Words
+namespace TagCloud.Core.Words.Filtering
 {
     public class WordFilter : IWordFilter
     {

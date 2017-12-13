@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TagCloud.Core.Words.Contract;
 using TagCloud.Core.Words.Filtering;
+using TagCloud.Core.Words.Processing;
 
 namespace TagCloud.Core.Words
 {
@@ -27,24 +28,52 @@ namespace TagCloud.Core.Words
             return GetEnumerator();
         }
 
+        #region Filtering
+
         public WordsList ExcludeFrom(IEnumerable<string> wordList)
         {
-            return Apply(new WordFilter(word => !wordList.Contains(word)));
+            return ApplyFilter(new WordFilter(word => !wordList.Contains(word)));
         }
 
         public WordsList ContainedIn(IEnumerable<string> wordList)
         {
-            return Apply(new WordFilter(wordList.Contains));
+            return ApplyFilter(new WordFilter(wordList.Contains));
         }
 
-        public WordsList Apply(IWordFilter filter)
+        public WordsList ApplyFilter(IWordFilter filter)
         {
             return new WordsList(_grammar, filter.Apply(this));
         }
 
         public WordsList Is(IEnumerable<PartOfSpeech> partsOfSpeech)
         {
-            return Apply(new PartOfSpeechFilter(_grammar, partsOfSpeech.Contains));
+            return ApplyFilter(new PartOfSpeechFilter(_grammar, partsOfSpeech.Contains));
         }
+
+        public WordsList NotIs(IEnumerable<PartOfSpeech> partsOfSpeech)
+        {
+            return ApplyFilter(new PartOfSpeechFilter(_grammar, word => !partsOfSpeech.Contains(word)));
+        }
+
+        #endregion
+
+        #region Processing
+
+        public WordsList ToLower()
+        {
+            return Process(new ToLowerProcessor());
+        }
+
+        public WordsList ToInitialForm()
+        {
+            return Process(new InitialFormOfWordProcessor(_grammar));
+        }
+
+        public WordsList Process(IWordProcessor processor)
+        {
+            return new WordsList(_grammar, processor.Process(this));
+        }
+
+        #endregion
     }
 }

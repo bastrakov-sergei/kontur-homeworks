@@ -1,4 +1,4 @@
-namespace TagCloud.Core.Words.Processing
+namespace TagCloud.Core.Words.PreProcessing
 {
     public interface IInitialFormOfWordProcessorFactory
     {

@@ -5,7 +5,7 @@ using TagCloud.Core.Words.Contract;
 
 namespace TagCloud.Core.Words.Filtering
 {
-    public class WordFilter : IWordFilter
+    public class WordFilter : IWordProcessor
     {
         private readonly Func<string, bool> _predicate;
 
@@ -17,6 +17,16 @@ namespace TagCloud.Core.Words.Filtering
         public IEnumerable<string> Apply(IEnumerable<string> words)
         {
             return words.Where(_predicate);
+        }
+
+        public static WordFilter ExcludeFrom(IEnumerable<string> wordList)
+        {
+            return new WordFilter(word => !wordList.Contains(word));
+        }
+
+        public static WordFilter ContainedIn(IEnumerable<string> wordList)
+        {
+            return new WordFilter(wordList.Contains);
         }
     }
 }

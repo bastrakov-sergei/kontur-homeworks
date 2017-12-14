@@ -24,10 +24,10 @@ namespace TagCloud.Core.Drawing
 
             foreach (RectangleView view in views)
             {
-                Rectangle rectangle = view.Rectangle.ToSystemRectangle();
+                Rectangle rectangle = view.Rectangle;
                 rectangle.X -= bounds.X;
                 rectangle.Y -= bounds.Y;
-                graphics.FillRectangle(new SolidBrush(view.Color), rectangle);
+                graphics.FillRectangle(new SolidBrush(view.BackgroundColor), rectangle);
                 graphics.DrawRectangle(new Pen(Color.Black, 1), rectangle);
             }
 
@@ -39,25 +39,12 @@ namespace TagCloud.Core.Drawing
             return ToBitmap(rectanglesViews, bounds, Color.Black);
         }
 
-        public static Bitmap ToBitmap(this IEnumerable<RectangleView> rectanglesViews, Color backgroundColor)
+        public static IEnumerable<RectangleView> Colorize(this IEnumerable<Rectangle> rectangles, Func<Color> getColorFunc)
         {
-            List<RectangleView> views = rectanglesViews.ToList();
-            Rectangle bounds = views.Select(view => view.Rectangle).GetBounds().ToSystemRectangle();
-
-            return ToBitmap(views, bounds, Color.Black);
+            return rectangles.Select(rectangle => new RectangleView(rectangle, null, getColorFunc()));
         }
 
-        public static Bitmap ToBitmap(this IEnumerable<RectangleView> rectanglesViews)
-        {
-            return ToBitmap(rectanglesViews, Color.Black);
-        }
-
-        public static IEnumerable<RectangleView> Colorize(this IEnumerable<Math.Rectangle> rectangles, Func<Color> getColorFunc)
-        {
-            return rectangles.Select(rectangle => new RectangleView(rectangle, getColorFunc()));
-        }
-
-        public static IEnumerable<RectangleView> Colorize(this IEnumerable<Math.Rectangle> rectangles)
+        public static IEnumerable<RectangleView> Colorize(this IEnumerable<Rectangle> rectangles)
         {
             ColorGenerator colorGenerator = new ColorGenerator(new Random(DateTime.Now.Millisecond));
             return Colorize(rectangles, () => colorGenerator.GetRandomColor());

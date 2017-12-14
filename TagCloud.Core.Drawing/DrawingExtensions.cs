@@ -19,5 +19,10 @@ namespace TagCloud.Core.Drawing
         {
             return new Size((int)vector.X, (int)vector.Y);
         }
+
+        public static Vector ToVector(this Size size)
+        {
+            return new Vector(size.Width, size.Height);
+        }
     }
 }

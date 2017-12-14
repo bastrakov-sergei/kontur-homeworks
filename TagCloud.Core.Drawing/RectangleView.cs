@@ -1,16 +1,19 @@
 ﻿using System.Drawing;
+using TagCloud.Core.Words;
 
 namespace TagCloud.Core.Drawing
 {
     public struct RectangleView
     {
-        public readonly Math.Rectangle Rectangle;
-        public readonly Color Color;
+        public readonly Rectangle Rectangle;
+        public readonly TagView TagView;
+        public readonly Color BackgroundColor;
 
-        public RectangleView(Math.Rectangle rectangle, Color color)
+        public RectangleView(Rectangle rectangle, TagView tagView, Color backgroundColor)
         {
             Rectangle = rectangle;
-            Color = color;
+            TagView = tagView;
+            BackgroundColor = backgroundColor;
         }
     }
 }

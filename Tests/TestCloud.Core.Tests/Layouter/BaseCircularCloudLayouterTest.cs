@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using TagCloud.Core.Drawing;
@@ -47,7 +48,7 @@ namespace TestCloud.Core.Tests.Layouter
         private void DumpResult()
         {
             List<Rectangle> rectangles = _trackedLayouter.Rectangles;
-            Bitmap bitmap = rectangles.Colorize().ToBitmap();
+            Bitmap bitmap = rectangles.Select(r => r.ToSystemRectangle()).Colorize().ToBitmap(new System.Drawing.Rectangle(0,0, 1920, 1080));
 
             string temporaryFile = Path.GetTempFileName() + ".png";
 

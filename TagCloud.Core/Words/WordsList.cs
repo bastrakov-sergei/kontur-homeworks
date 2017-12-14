@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TagCloud.Core.Words.Contract;
 using TagCloud.Core.Words.Filtering;
-using TagCloud.Core.Words.Processing;
+using TagCloud.Core.Words.Statistics;
 
 namespace TagCloud.Core.Words
 {
     public class WordsList : IEnumerable<string>
     {
-        private readonly IGrammar _grammar;
         private readonly IEnumerable<string> _words;
 
-        public WordsList(IGrammar grammar, IEnumerable<string> words)
+        public WordsList(IEnumerable<string> words)
         {
-            _grammar = grammar;
             _words = words;
         }
 
@@ -30,48 +27,42 @@ namespace TagCloud.Core.Words
 
         #region Filtering
 
-        public WordsList ExcludeFrom(IEnumerable<string> wordList)
+        public WordsList Apply(IWordProcessor processor)
         {
-            return ApplyFilter(new WordFilter(word => !wordList.Contains(word)));
+            return new WordsList(processor.Apply(this));
         }
 
-        public WordsList ContainedIn(IEnumerable<string> wordList)
+        public WordsList Take(int amount)
         {
-            return ApplyFilter(new WordFilter(wordList.Contains));
-        }
-
-        public WordsList ApplyFilter(IWordFilter filter)
-        {
-            return new WordsList(_grammar, filter.Apply(this));
-        }
-
-        public WordsList Is(IEnumerable<PartOfSpeech> partsOfSpeech)
-        {
-            return ApplyFilter(new PartOfSpeechFilter(_grammar, partsOfSpeech.Contains));
-        }
-
-        public WordsList NotIs(IEnumerable<PartOfSpeech> partsOfSpeech)
-        {
-            return ApplyFilter(new PartOfSpeechFilter(_grammar, word => !partsOfSpeech.Contains(word)));
+            return Apply(new AmountFilter(amount));
         }
 
         #endregion
 
         #region Processing
 
-        public WordsList ToLower()
+        //public WordsList ToLower()
+        //{
+        //    return Apply(new ToLowerProcessor());
+        //}
+
+        //public WordsList ToInitialForm()
+        //{
+        //    return Apply(new InitialFormOfWordProcessor(_grammar));
+        //}
+
+        #endregion
+
+        #region Statistics
+
+        public WordsStatistic GetStats()
         {
-            return Process(new ToLowerProcessor());
+            return new WordsStatistic(this);
         }
 
-        public WordsList ToInitialForm()
+        public IEnumerable<Tag> ToTags()
         {
-            return Process(new InitialFormOfWordProcessor(_grammar));
-        }
-
-        public WordsList Process(IWordProcessor processor)
-        {
-            return new WordsList(_grammar, processor.Process(this));
+            return GetStats().GetTags();
         }
 
         #endregion

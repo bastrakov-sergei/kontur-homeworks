@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using TagCloud.Core;
 using TagCloud.Core.Drawing;
@@ -22,6 +23,8 @@ namespace TagCloud.Client.Forms
             InitializeComponent();
             DoubleBuffered = true;
             Size = new Size(1920, 1080);
+
+            Generate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -29,23 +32,27 @@ namespace TagCloud.Client.Forms
             base.OnPaint(e);
             Graphics g = e.Graphics;
 
-            Bitmap bitmap = _rectangles.Colorize().ToBitmap(new System.Drawing.Rectangle(0, 0, 1920, 1080));
+            Bitmap bitmap = _rectangles.Select(r => r.ToSystemRectangle()).Colorize().ToBitmap(new System.Drawing.Rectangle(0, 0, 1920, 1080));
 
             g.DrawImage(bitmap, new Point(0, 0));
-            g.DrawEllipse(new Pen(Color.Black, 2), 640, 320, 440, 440);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            Generate();
+        }
+
+        private void Generate()
+        {
             _cloudLayouter = new PositionedLayouter(new CircularCloudLayouter(200, 32, 0.1), new Vector(860, 540));
             _rectangles.Clear();
-            
+
             for (int i = 0; i < 97; i++)
             {
-                Rectangle rect = _cloudLayouter.Place(new Vector(40, 40));
+                Rectangle rect = _cloudLayouter.Place(new Vector(120, 40));
                 _rectangles.Add(rect);
             }
-            
+
             Invalidate();
         }
     }

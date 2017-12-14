@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagCloud.Core.Words.Contract;
 
-namespace TagCloud.Core.Words.Processing
+namespace TagCloud.Core.Words.PreProcessing
 {
     public class InitialFormOfWordProcessor : IWordProcessor
     {
@@ -16,7 +13,7 @@ namespace TagCloud.Core.Words.Processing
             _grammar = grammar;
         }
 
-        public IEnumerable<string> Process(IEnumerable<string> words)
+        public IEnumerable<string> Apply(IEnumerable<string> words)
         {
             return words.Select(_grammar.GetInitialFormOfWord);
         }

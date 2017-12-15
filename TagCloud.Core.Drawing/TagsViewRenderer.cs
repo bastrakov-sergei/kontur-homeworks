@@ -63,7 +63,7 @@ namespace TagCloud.Core.Drawing
                 var size = tagView.Size.ToVector();
                 var rectangle = _rectangleLayouter.Place(size);
 
-                tmpBounds.Encapsulate(rectangle);
+                tmpBounds = tmpBounds.Encapsulate(rectangle);
 
                 rectangles.Add(new RectangleView(rectangle.ToSystemRectangle(), tagView, Color.Transparent));
             }

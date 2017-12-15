@@ -61,6 +61,7 @@
     <Compile Include="TagsViewRenderer.cs" />
     <Compile Include="TagView.cs" />
     <Compile Include="TextMeasurer.cs" />
+    <Compile Include="WordsCloudRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TagCloud.Core\TagCloud.Core.csproj">

@@ -54,11 +54,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\CircleShapeFactory.cs" />
     <Compile Include="Words\Filtering\AmountFilter.cs" />
+    <Compile Include="Words\Filtering\UniqueFilter.cs" />
+    <Compile Include="Words\Loaders\PlainTextLoader.cs" />
     <Compile Include="Words\PreProcessing\IInitialFormOfWordProcessorFactory.cs" />
     <Compile Include="Words\PartOfSpeech.cs" />
     <Compile Include="Words\Contract\IGrammar.cs" />
     <Compile Include="Words\Contract\IWordProcessor.cs" />
-    <Compile Include="Words\Contract\IWordsListFactory.cs" />
     <Compile Include="Words\Contract\IWordsLoader.cs" />
     <Compile Include="Words\Filtering\PartOfSpeechFilter.cs" />
     <Compile Include="Words\Loaders\TextLoader.cs" />

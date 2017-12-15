@@ -17,16 +17,16 @@ namespace TagCloud.Core.Drawing
             _textMeasurer = textMeasurer;
         }
 
-        public IEnumerable<TagView> GetView(IWordsStatistic stats)
+        public IEnumerable<TagView> GetView(IWordsStatistic stats, int maxTags)
         {
-            var tags = stats.GetTags();
-            var tagsAmount = stats.Amount;
+            var tags = stats.GetTags().Take(maxTags);
+            var tagsAmount = System.Math.Min(stats.Amount, maxTags);
             return tags.Select((t, i) => GetTagView(t, i, tagsAmount));
         }
 
         private TagView GetTagView(Tag tag, int index, int tagsAmount)
         {
-            var font = _fontFactory.GetFont(index, tagsAmount);
+            var font = _fontFactory.GetFont(tagsAmount - index - 1, tagsAmount);
             var color = _colorizer.GetColor(tag);
             var rectangle = _textMeasurer.Measure(tag.Word, font);
 

@@ -4,7 +4,7 @@ using TagCloud.Core.Words.Contract;
 
 namespace TagCloud.Core.Words.Loaders
 {
-    public class WordPerLineFileLoader : IWordsLoader
+    public class PlainTextLoader : IWordsLoader
     {
         public IEnumerable<string> Load(string file)
         {
@@ -12,7 +12,10 @@ namespace TagCloud.Core.Words.Loaders
             {
                 while (!reader.EndOfStream)
                 {
-                    yield return reader.ReadLine();
+                    foreach (var word in reader.ReadLine().Split())
+                    {
+                        yield return word;
+                    }
                 }
             }
         }
